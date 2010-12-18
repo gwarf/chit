@@ -3,7 +3,7 @@ $:.unshift File.dirname(__FILE__)
 
 module Chit
   extend self
-  VERSION = '0.0.6'
+  VERSION = '0.0.7'
   
   defaults = {
     'root'  => File.join("#{ENV['HOME']}",".chit")
@@ -48,6 +48,7 @@ module Chit
   def parse_args(args)
     init_chit and return if args.delete('--init')
     update and return if args.delete('--update')
+    push and return if (args.delete('--push')||args.delete('-p'))
     
     @sheet = args.shift || 'chit'
     is_private = (@sheet =~ /^@(.*)/)
@@ -153,6 +154,17 @@ module Chit
     end
   rescue
     puts "ERROR: can not update main chit."
+    puts $!
+  end
+  
+  def push
+    if CONFIG['main']['push-to']
+      g = Git.open(main_path)
+      g.push
+      true
+    end
+  rescue
+    puts "ERROR: can not push main chit."
     puts $!
   end
   
