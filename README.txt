@@ -73,6 +73,14 @@ To move or rename a sheet, use '--mv/-m' switch
 
 $ chit zsh_if zsh/if -m
 
+To update repository, use '--update' switch
+
+$ chit --update
+
+To push repository, use '--push' switch
+
+$ chit --push
+
 == INSTALL:
 
 sudo gem install robin-chit -s http://gems.github.com
